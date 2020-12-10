@@ -80,3 +80,11 @@ function RobAll() {
 ##请求地址如何获取？
 先看一下普通选课的请求地址,例如：（不适与公选课和创新课）
 http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&jxbid=20202021221110001461804&glJxbid=
+<img src="https://github.com/9cats/robclass/blob/master/images/url1.png?raw=true" width="100%">
+以下列出可能出现的参数
+method-选课方式
+jxbid-----课程号
+glJxbid--关联课号
+(xkzy----志愿等级)(公选课志愿等级)
+##### jxbid 的获取
+
