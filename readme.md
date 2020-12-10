@@ -94,4 +94,13 @@ glJxbid--关联课号
 以下为我在开始选课之前获取关联课列表的方案
 1.用fidder全局代理游览器
 2.
-<img src="https://github.com/9cats/robclass/blob/master/images/jxbid2.png?raw=true" width="100%">
+<img src="https://github.com/9cats/robclass/blob/master/images/gl1.png?raw=true" width="100%">
+3.同获取jxbid的方法获取glJxbid(那个函数有两个参数，前面一个为jxbid,后面一个为glJxbid)
+下图为我在选课开始之前打开的关联课界面(选课在12/8 13:00开始)
+<img src="https://github.com/9cats/robclass/blob/master/images/gl2.png?raw=true" width="100%">
+###注意
+一般选课(推荐选课，方案内，方案外，体育)的method为:handleTjxk
+公选课为:handleQxgxk   (注意后面还有一个xkzy(第几志愿)参数)
+创新课为:handleCxcy
+
+###检验自己写的请求地址是否正确的方法
