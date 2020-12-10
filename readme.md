@@ -74,4 +74,5 @@ function RobAll() {
 ###在哪执行代码?
 在选课系统的页面按下F12（Chrome 和 Microsoft Edge均可）
 <img src="https://github.com/9cats/robclass/blob/master/images/console.png?raw=true" width="100%">
-
+效果图如下
+<img src="https://github.com/9cats/robclass/blob/master/images/result.png?raw=true" width="100%">
