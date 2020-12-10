@@ -1,116 +1,116 @@
-# 游览器控制台实现自动抢课
-## 选课原理大概
-<img src="https://github.com/9cats/robclass/blob/master/images/common.png?raw=true" width="100%">
-## 上代码(示例代码)
-```
-//准备选的课程
-myClass = [
-    {
-        "name": "英语",
-        "url": "http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&jxbid=2020-2021-220W10000091313&glJxbid=",
-        "request": new XMLHttpRequest()
-    },
-    {
-        "name": "大数据",
-        "url": "http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&jxbid=20202021221110001541802&glJxbid=202020212211100015418S01",
-        "request": new XMLHttpRequest()
-    },
-    {
-        "name": "工程电磁",
-        "url": "http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&jxbid=20202021221110001161802&glJxbid=",
-        "request": new XMLHttpRequest()
-    },
-    {
-        "name": "数电",
-        "url": "http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&jxbid=20202021221110001461804&glJxbid=",
-        "request": new XMLHttpRequest()
-    },
-    {
-        "name": "高频电子",
-        "url": "http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&jxbid=20202021221110001581803&glJxbid=202020212211100015818S01",
-        "request": new XMLHttpRequest()
-    },
-    {
-        "name": "信号与系统",
-        "url": "http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&jxbid=20202021221110200431304&glJxbid=202020212211102004313S01",
-        "request": new XMLHttpRequest()
-    },
-    {
-        "name": "数电实验",
-        "url": "http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&jxbid=20202021221111001471805&glJxbid=",
-        "request": new XMLHttpRequest()
-    },
-    {
-        "name": "马原",
-        "url": "http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&jxbid=20202021221710001231820&glJxbid=",
-        "request": new XMLHttpRequest()
-    }
-]
-
-
-//这个函数表示定时解释某些代码
-function Rob(oneClass) {
-    setInterval(function () {
-        {
-            oneClass.request.open("GET", oneClass.url, true);
-            oneClass.request.send();
-            oneClass.request.onreadystatechange = function () {
-                if (oneClass.request.readyState == 4 && oneClass.request.status == 200) {
-                    console.log(oneClass.name + oneClass.request.responseText);
-                }
-            }
-        }
-    }, 4000)//4000可理解为4s执行一次（实际上是4s放入堆区）
-}
-
-
-//同时抢所有课程
-function RobAll() {
-    for (i in myClass) {
-        Rob(myClass[i]);
-    }
-}
-```
-###在哪执行代码?
-在选课系统的页面按下F12（Chrome 和 Microsoft Edge均可）
-<img src="https://github.com/9cats/robclass/blob/master/images/console.png?raw=true" width="100%">
-效果图如下
-<img src="https://github.com/9cats/robclass/blob/master/images/result.png?raw=true" width="100%">
-
-##请求地址如何获取？
-先看一下普通选课的请求地址,例如：（不适与公选课和创新课）
-http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&jxbid=20202021221110001461804&glJxbid=
-<img src="https://github.com/9cats/robclass/blob/master/images/url1.png?raw=true" width="100%">
-以下列出可能出现的参数
-method-选课方式
-jxbid-----课程号
-glJxbid--关联课号
-(xkzy----志愿等级)(公选课志愿等级)
-##### jxbid 的获取
-<img src="https://github.com/9cats/robclass/blob/master/images/jxbid1.png?raw=true" width="100%">
-<img src="https://github.com/9cats/robclass/blob/master/images/jxbid2.png?raw=true" width="100%">
-##### glJxbid 的获取
-由于我把有关联课的课都选完了，目前不太好展示
-以下为我在开始选课之前获取关联课列表的方案
-1.用fidder全局代理游览器
-2.
-<img src="https://github.com/9cats/robclass/blob/master/images/gl1.png?raw=true" width="100%">
-3.同获取jxbid的方法获取glJxbid(那个函数有两个参数，前面一个为jxbid,后面一个为glJxbid)
-下图为我在选课开始之前打开的关联课界面(选课在12/8 13:00开始)
-<img src="https://github.com/9cats/robclass/blob/master/images/gl2.png?raw=true" width="100%">
-###注意
-一般选课(推荐选课，方案内，方案外，体育)的method为:handleTjxk
-公选课为:handleQxgxk   (注意后面还有一个xkzy(第几志愿)参数)
-创新课为:handleCxcy
-
-###检验自己写的请求地址是否正确的方法
-<img src="https://github.com/9cats/robclass/blob/master/images/check.png?raw=true" width="100%">
-PS：选课开始之前可以通过这个方法检验URL是否正确
-
-##将会在公选课和创业课，选课前更新
-
-#####下图是我在13:00:02选完了所有课(9门)
-<img src="https://github.com/9cats/robclass/blob/master/images/myc.png?raw=true" width="100%">
-######解释一下为什么,0.2s抢一次,还是花了2s才抢完所有课
-js是解释型语言
-0.2s表示抢课那段代码进入堆区,实际上只有堆区代码执行完才会执行刚进去的代码，的速度没有那么快，可以通过几个页面同时抢不同的课程，加快抢课速度
+<div>
+<div>#&nbsp;游览器控制台实现自动抢课</div>
+<div>##&nbsp;选课原理大概</div>
+<div>&lt;img&nbsp;src="https://github.com/9cats/robclass/blob/master/images/common.png?raw=true"&nbsp;width="100%"&gt;</div>
+<div>###&nbsp;上代码(示例代码)</div>
+<div>```</div>
+<div>//准备选的课程</div>
+<div>myClass&nbsp;=&nbsp;[</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name":&nbsp;"英语",</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"url":&nbsp;"http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&amp;jxbid=2020-2021-220W10000091313&amp;glJxbid=",</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"request":&nbsp;new&nbsp;XMLHttpRequest()</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;},</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name":&nbsp;"大数据",</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"url":&nbsp;"http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&amp;jxbid=20202021221110001541802&amp;glJxbid=202020212211100015418S01",</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"request":&nbsp;new&nbsp;XMLHttpRequest()</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;},</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name":&nbsp;"工程电磁",</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"url":&nbsp;"http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&amp;jxbid=20202021221110001161802&amp;glJxbid=",</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"request":&nbsp;new&nbsp;XMLHttpRequest()</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;},</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name":&nbsp;"数电",</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"url":&nbsp;"http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&amp;jxbid=20202021221110001461804&amp;glJxbid=",</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"request":&nbsp;new&nbsp;XMLHttpRequest()</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;},</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name":&nbsp;"高频电子",</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"url":&nbsp;"http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&amp;jxbid=20202021221110001581803&amp;glJxbid=202020212211100015818S01",</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"request":&nbsp;new&nbsp;XMLHttpRequest()</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;},</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name":&nbsp;"信号与系统",</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"url":&nbsp;"http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&amp;jxbid=20202021221110200431304&amp;glJxbid=202020212211102004313S01",</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"request":&nbsp;new&nbsp;XMLHttpRequest()</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;},</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name":&nbsp;"数电实验",</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"url":&nbsp;"http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&amp;jxbid=20202021221111001471805&amp;glJxbid=",</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"request":&nbsp;new&nbsp;XMLHttpRequest()</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;},</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name":&nbsp;"马原",</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"url":&nbsp;"http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&amp;jxbid=20202021221710001231820&amp;glJxbid=",</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"request":&nbsp;new&nbsp;XMLHttpRequest()</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>]</div>
+<br /><br />
+<div>//这个函数表示定时解释某些代码</div>
+<div>function&nbsp;Rob(oneClass)&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;setInterval(function&nbsp;()&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oneClass.request.open("GET",&nbsp;oneClass.url,&nbsp;true);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oneClass.request.send();</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oneClass.request.onreadystatechange&nbsp;=&nbsp;function&nbsp;()&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(oneClass.request.readyState&nbsp;==&nbsp;4&nbsp;&amp;&amp;&nbsp;oneClass.request.status&nbsp;==&nbsp;200)&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(oneClass.name&nbsp;+&nbsp;oneClass.request.responseText);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;4000)//4000可理解为4s执行一次（实际上是4s放入堆区）</div>
+<div>}</div>
+<br /><br />
+<div>//同时抢所有课程</div>
+<div>function&nbsp;RobAll()&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(i&nbsp;in&nbsp;myClass)&nbsp;{</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rob(myClass[i]);</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+<div>}</div>
+<div>```</div>
+<div>###在哪执行代码?</div>
+<div>在选课系统的页面按下F12（Chrome&nbsp;和&nbsp;Microsoft&nbsp;Edge均可）</div>
+<div>&lt;img&nbsp;src="https://github.com/9cats/robclass/blob/master/images/console.png?raw=true"&nbsp;width="100%"&gt;</div>
+<div>效果图如下</div>
+<div>&lt;img&nbsp;src="https://github.com/9cats/robclass/blob/master/images/result.png?raw=true"&nbsp;width="100%"&gt;</div>
+<br />
+<div>##请求地址如何获取？</div>
+<div>先看一下普通选课的请求地址,例如：（不适与公选课和创新课）</div>
+<div>http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&amp;jxbid=20202021221110001461804&amp;glJxbid=</div>
+<div>&lt;img&nbsp;src="https://github.com/9cats/robclass/blob/master/images/url1.png?raw=true"&nbsp;width="100%"&gt;</div>
+<div>以下列出可能出现的参数</div>
+<div>method-选课方式</div>
+<div>jxbid-----课程号</div>
+<div>glJxbid--关联课号</div>
+<div>(xkzy----志愿等级)(公选课志愿等级)</div>
+<div>#####&nbsp;jxbid&nbsp;的获取</div>
+<div>&lt;img&nbsp;src="https://github.com/9cats/robclass/blob/master/images/jxbid1.png?raw=true"&nbsp;width="100%"&gt;</div>
+<div>&lt;img&nbsp;src="https://github.com/9cats/robclass/blob/master/images/jxbid2.png?raw=true"&nbsp;width="100%"&gt;</div>
+<div>#####&nbsp;glJxbid&nbsp;的获取</div>
+<div>由于我把有关联课的课都选完了，目前不太好展示</div>
+<div>以下为我在开始选课之前获取关联课列表的方案</div>
+<div>1.用fidder全局代理游览器</div>
+<div>2.</div>
+<div>&lt;img&nbsp;src="https://github.com/9cats/robclass/blob/master/images/gl1.png?raw=true"&nbsp;width="100%"&gt;</div>
+<div>3.同获取jxbid的方法获取glJxbid(那个函数有两个参数，前面一个为jxbid,后面一个为glJxbid)</div>
+<div>下图为我在选课开始之前打开的关联课界面(选课在12/8&nbsp;13:00开始)</div>
+<div>&lt;img&nbsp;src="https://github.com/9cats/robclass/blob/master/images/gl2.png?raw=true"&nbsp;width="100%"&gt;</div>
+<div>###注意</div>
+<div>一般选课(推荐选课，方案内，方案外，体育)的method为:handleTjxk</div>
+<div>公选课为:handleQxgxk&nbsp;&nbsp;&nbsp;(注意后面还有一个xkzy(第几志愿)参数)</div>
+<div>创新课为:handleCxcy</div>
+<br />
+<div>###检验自己写的请求地址是否正确的方法</div>
+<div>&lt;img&nbsp;src="https://github.com/9cats/robclass/blob/master/images/check.png?raw=true"&nbsp;width="100%"&gt;</div>
+<div>PS：选课开始之前可以通过这个方法检验URL是否正确</div>
+<br />
+<div>##将会在公选课和创业课，选课前更新</div>
+<br />
+<div>#####下图是我在13:00:02选完了所有课(9门)</div>
+<div>&lt;img&nbsp;src="https://github.com/9cats/robclass/blob/master/images/myc.png?raw=true"&nbsp;width="100%"&gt;</div>
+<div>######解释一下为什么,0.2s抢一次,还是花了2s才抢完所有课</div>
+<div>js是解释型语言</div>
+<div>0.2s表示抢课那段代码进入堆区,实际上只有堆区代码执行完才会执行刚进去的代码，的速度没有那么快，可以通过几个页面同时抢不同的课程，加快抢课速度</div>
+</div>
