@@ -104,3 +104,7 @@ glJxbid--关联课号
 创新课为:handleCxcy
 
 ###检验自己写的请求地址是否正确的方法
+<img src="https://github.com/9cats/robclass/blob/master/images/check.png?raw=true" width="100%">
+PS：选课开始之前可以通过这个方法检验URL是否正确
+
+##将会在公选课和创业课，选课前更新
