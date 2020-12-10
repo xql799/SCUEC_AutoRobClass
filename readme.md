@@ -87,4 +87,11 @@ jxbid-----课程号
 glJxbid--关联课号
 (xkzy----志愿等级)(公选课志愿等级)
 ##### jxbid 的获取
-
+<img src="https://github.com/9cats/robclass/blob/master/images/jxbid1.png?raw=true" width="100%">
+<img src="https://github.com/9cats/robclass/blob/master/images/jxbid2.png?raw=true" width="100%">
+##### glJxbid 的获取
+由于我把有关联课的课都选完了，目前不太好展示
+以下为我在开始选课之前获取关联课列表的方案
+1.用fidder全局代理游览器
+2.
+<img src="https://github.com/9cats/robclass/blob/master/images/jxbid2.png?raw=true" width="100%">
