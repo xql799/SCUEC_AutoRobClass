@@ -2,8 +2,6 @@
 ## 选课原理大概
 <img src="https://github.com/9cats/robclass/blob/master/images/common.png?raw=true" width="100%">
 ### 上代码(示例代码)
-``````
-``````
 //准备选的课程
 myClass = [
     {
@@ -71,7 +69,6 @@ function RobAll() {
         Rob(myClass[i]);
     }
 }
-``````
 ###在哪执行代码?
 在选课系统的页面按下F12（Chrome 和 Microsoft Edge均可）
 <img src="https://github.com/9cats/robclass/blob/master/images/console.png?raw=true" width="100%">
