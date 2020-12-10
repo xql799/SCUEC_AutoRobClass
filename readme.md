@@ -76,3 +76,7 @@ function RobAll() {
 <img src="https://github.com/9cats/robclass/blob/master/images/console.png?raw=true" width="100%">
 效果图如下
 <img src="https://github.com/9cats/robclass/blob/master/images/result.png?raw=true" width="100%">
+
+##请求地址如何获取？
+先看一下普通选课的请求地址,例如：（不适与公选课和创新课）
+http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&jxbid=20202021221110001461804&glJxbid=
