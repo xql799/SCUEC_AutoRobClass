@@ -2,7 +2,7 @@
 ## 选课原理大概
 <img src="https://github.com/9cats/robclass/blob/master/images/common.png?raw=true" width="100%">
 ### 上代码(示例代码)
-//准备选的课程
+//准备选的课程''
 myClass = [
     {
         "name": "英语",
