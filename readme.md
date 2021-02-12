@@ -113,3 +113,6 @@ PS：选课开始之前可以通过这个方法检验URL是否正确
 
 ##### 下图是我在13:00:02选完了所有课(9门)
 <img src="https://github.com/9cats/robclass/blob/master/images/myc.png?raw=true" width="100%">
+
+##### 最后
+本人通信专业，dalao见笑，如果有问题和想法可以发issue
