@@ -1,7 +1,10 @@
 # 游览器控制台实现自动抢课
+中南民族大学(SCUEC) 游览器抢课脚本
 ## 选课原理大概
 <img src="https://github.com/9cats/robclass/blob/master/images/common.png?raw=true" width="100%">
-### 上代码(示例代码)
+ 上代码(示例代码)
+
+```
 //准备选的课程''
 myClass = [
     {
@@ -59,7 +62,7 @@ function Rob(oneClass) {
                 }
             }
         }
-    }, 4000)//4000可理解为4s执行一次（实际上是4s放入堆区）
+    }, 4000)//4s执行一次
 }
 
 
@@ -69,13 +72,15 @@ function RobAll() {
         Rob(myClass[i]);
     }
 }
-###在哪执行代码?
+```
+
+### 在哪执行代码?
 在选课系统的页面按下F12（Chrome 和 Microsoft Edge均可）
 <img src="https://github.com/9cats/robclass/blob/master/images/console.png?raw=true" width="100%">
 效果图如下
 <img src="https://github.com/9cats/robclass/blob/master/images/result.png?raw=true" width="100%">
 
-##请求地址如何获取？
+## 请求地址如何获取？
 先看一下普通选课的请求地址,例如：（不适与公选课和创新课）
 http://xk.scuec.edu.cn/xsxk/xkOper.xk?method=handleTjxk&jxbid=20202021221110001461804&glJxbid=
 <img src="https://github.com/9cats/robclass/blob/master/images/url1.png?raw=true" width="100%">
@@ -84,10 +89,11 @@ method-选课方式
 jxbid-----课程号
 glJxbid--关联课号
 (xkzy----志愿等级)(公选课志愿等级)
-##### jxbid 的获取
+### jxbid 的获取
 <img src="https://github.com/9cats/robclass/blob/master/images/jxbid1.png?raw=true" width="100%">
 <img src="https://github.com/9cats/robclass/blob/master/images/jxbid2.png?raw=true" width="100%">
-##### glJxbid 的获取
+
+### glJxbid 的获取
 由于我把有关联课的课都选完了，目前不太好展示
 以下为我在开始选课之前获取关联课列表的方案
 1.用fidder全局代理游览器
@@ -96,19 +102,14 @@ glJxbid--关联课号
 3.同获取jxbid的方法获取glJxbid(那个函数有两个参数，前面一个为jxbid,后面一个为glJxbid)
 下图为我在选课开始之前打开的关联课界面(选课在12/8 13:00开始)
 <img src="https://github.com/9cats/robclass/blob/master/images/gl2.png?raw=true" width="100%">
-###注意
+### 注意
 一般选课(推荐选课，方案内，方案外，体育)的method为:handleTjxk
 公选课为:handleQxgxk   (注意后面还有一个xkzy(第几志愿)参数)
 创新课为:handleCxcy
 
-###检验自己写的请求地址是否正确的方法
+### 检验自己写的请求地址是否正确的方法
 <img src="https://github.com/9cats/robclass/blob/master/images/check.png?raw=true" width="100%">
 PS：选课开始之前可以通过这个方法检验URL是否正确
 
-##将会在公选课和创业课，选课前更新
-
-#####下图是我在13:00:02选完了所有课(9门)
+##### 下图是我在13:00:02选完了所有课(9门)
 <img src="https://github.com/9cats/robclass/blob/master/images/myc.png?raw=true" width="100%">
-######解释一下为什么,0.2s抢一次,还是花了2s才抢完所有课
-js是解释型语言
-0.2s表示抢课那段代码进入堆区,实际上只有堆区代码执行完才会执行刚进去的代码，的速度没有那么快，可以通过几个页面同时抢不同的课程，加快抢课速度
