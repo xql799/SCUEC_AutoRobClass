@@ -3,7 +3,7 @@
 
 为了减少错误，建议大家看看选课的大概原理
 ## 选课原理大概
-<img src="https://github.com/9cats/robclass/blob/master/images/common.png?raw=true" width="100%">
+![选课](https://img-blog.csdnimg.cn/20210228011934128.png)
 
 ## 自动抢课的实现原理
 选课的最重要的一步是**向选课系统发送特定的请求**
