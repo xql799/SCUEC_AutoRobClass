@@ -96,7 +96,6 @@ function rob() {
 |handleTyxk(暂未测试)|体育选择选课|jxbid(暂未测试)|
 |handleQxgxk|通识课程选修|jxbid glJxbid xkzy (**注意：补选时不需要xkzy**)|
 |handleCxcy|创新创业类选课|jxbid|
-|getGljxb|获得关联班信息|jxbid (**可通过此method获得glJxbid的信息**)|
 
 下图为出现的参数代表的意义
 |参数名|意义|备注|
