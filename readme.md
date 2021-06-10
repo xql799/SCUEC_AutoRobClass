@@ -93,7 +93,7 @@ function rob() {
 |handleBfakc|方案内选课|jxbid glJxbid|
 |handleKzyxk|方案外选课|jxbid glJxbid|
 |handleCxxk|重修选课|jxbid glJxbid|
-|handleTyxk(暂未测试)|体育选择选课|jxbid(暂未测试)|
+|handleTykxk(暂未测试)|体育选择选课|jxbid(暂未测试)|
 |handleQxgxk|通识课程选修|jxbid glJxbid xkzy (**注意：补选时不需要xkzy**)|
 |handleCxcy|创新创业类选课|jxbid|
 
