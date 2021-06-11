@@ -1,4 +1,4 @@
-var timer = 500;
+var timer = 200;
 box = window.frames[0];
 Tjxk = window.frames[0][0];
 xkJxbList = Tjxk.xkJxbList;
@@ -16,7 +16,7 @@ $("#robConsole").css({
 });
 
 function addRob(jxbid, glJxbid) {
-    JxbObj = top.xkJxbList[jxbid];
+    var JxbObj = top.xkJxbList[jxbid];
     //判断是否有关联班
     if ("undefined" == typeof glJxbid) {
         //判断是否注册抢课事件
